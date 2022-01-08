@@ -1,0 +1,1 @@
+create table todo (id int8 not null, description varchar(255) not null, primary key (id));

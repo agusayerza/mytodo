@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  backend:
+    image: 'mytodo-backend:latest'
+    build:
+      context: .
+    container_name: backend
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+
+  database:
+    build: ./src/docker/database
+    ports:
+      - "5432:5432"
+
+  frontend:
+    image: 'mytodo-frontend:latest'
+    build:
+      context: ./src/webapp
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
