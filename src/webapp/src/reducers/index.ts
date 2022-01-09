@@ -1,7 +1,9 @@
 import todo from './todos'
+import folder from './folder'
 
 const rootReducer = {
-  todo
+  todo,
+  folder
 };
 
 export default rootReducer;

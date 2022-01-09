@@ -1,18 +1,30 @@
-import React, { Fragment } from 'react';
-import logo from './logo.svg';
+import { Fragment } from 'react';
 import './App.css';
-import Todos from './components/todos';
-import { Container, Navbar } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import Header from './components/header';
+import {
+  Route,
+  Switch,
+} from "react-router-dom";
+import Folders from './components/entities/folder/folders';
+import Todos from './components/entities/todo/todos';
 
 function App() {
   return (
     <Fragment>
       <Header/>
       <Container className="mainBody">
-        <Todos/>
+        <Switch>
+          <Route path="/folder/:folderId">
+            <Todos />
+          </Route>
+          <Route path="/">
+            <Folders />
+          </Route>
+        </Switch>
       </Container>
     </Fragment>
+
   );
 }
 

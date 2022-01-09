@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
+import { createAsyncThunk, isFulfilled, isPending } from '@reduxjs/toolkit';
 import { defaultValue, ITodo } from '../types/todo';
-import { cleanEntity, createEntitySlice, EntityState } from './utils';
+import { createEntitySlice, EntityState } from './utils';
 import { BASE_URI } from '../config/constants';
-
+import {IRootState} from '../config/store'
+import { getFolder } from './folder';
 const initialState: EntityState<ITodo> = {
   loading: false,
   entities: [],
@@ -13,8 +14,15 @@ const initialState: EntityState<ITodo> = {
 const apiUrl = BASE_URI + '/todo';
 
 export const getTodos = createAsyncThunk('todo/get_all',
-async () => {
-  const requestUrl = `${apiUrl}`;
+async(v, thunkAPI) => {
+  const state = thunkAPI.getState() as IRootState;
+  const requestUrl = `${apiUrl}/folder/${state.folder.entity.id}`;
+  return axios.get<ITodo[]>(requestUrl);
+});
+
+export const getTodosForFolder = createAsyncThunk('todo/get_for_folder',
+async (folderId: number) => {
+  const requestUrl = `${apiUrl}/folder/${folderId}`;
   return axios.get<ITodo[]>(requestUrl);
 });
 
@@ -29,8 +37,9 @@ export const getTodo = createAsyncThunk(
 export const createTodo = createAsyncThunk(
   'todo/create',
   async (entity: ITodo, thunkAPI) => {
+    entity.folderId = (thunkAPI.getState() as IRootState).folder.entity.id
     console.log(entity)
-    const result = await axios.post<ITodo>(apiUrl, {description: entity.description});
+    const result = await axios.post<ITodo>(apiUrl, entity);
     thunkAPI.dispatch(getTodos());
     return result;
   }
@@ -39,8 +48,9 @@ export const createTodo = createAsyncThunk(
 export const updateTodo = createAsyncThunk(
   'todo/update',
   async (entity: ITodo, thunkAPI) => {
+    entity.folderId = (thunkAPI.getState() as IRootState).folder.entity.id
     console.log(entity)
-    const result = await axios.put<ITodo>(`${apiUrl}/${entity.id}`, entity);
+    const result = await axios.put(`${apiUrl}/${entity.id}`, entity);
     thunkAPI.dispatch(getTodos());
     return result;
   }
@@ -52,6 +62,9 @@ export const deleteTodo = createAsyncThunk(
     const requestUrl = `${apiUrl}/${id}`;
     const result = await axios.delete<ITodo>(requestUrl);
     thunkAPI.dispatch(getTodos());
+    const currentFolder = (thunkAPI.getState() as IRootState).folder.entity.id;
+    if(currentFolder !== -1)
+    thunkAPI.dispatch(getFolder(currentFolder));
     return result;
   }
 );
@@ -67,7 +80,7 @@ export const TodoSlice = createEntitySlice({
       .addCase(deleteTodo.fulfilled, state => {
         state.loading = false
       })
-      .addMatcher(isFulfilled(getTodos), (state, action) => {
+      .addMatcher(isFulfilled(getTodos, getTodosForFolder), (state, action) => {
         return {
           ...state,
           loading: false,
@@ -78,7 +91,7 @@ export const TodoSlice = createEntitySlice({
         state.loading = false;
         state.entity = action.payload.data;
       })
-      .addMatcher(isPending(getTodos, getTodo), state => {
+      .addMatcher(isPending(getTodos, getTodosForFolder, getTodo), state => {
         state.loading = true;
       });
   },

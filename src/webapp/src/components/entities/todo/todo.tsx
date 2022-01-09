@@ -1,10 +1,10 @@
-import { Button, Col, Form, Modal, Row } from "react-bootstrap"
-import { ITodo } from "../types/todo"
+import { Button, Col, Form, Row } from "react-bootstrap"
+import { ITodo } from "../../../types/todo"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useAppDispatch } from "../config/store"
-import { updateTodo } from "../reducers/todos"
+import { useAppDispatch } from "../../../config/store"
+import { updateTodo } from "../../../reducers/todos"
 
 export interface ITodoProps {
   todo: ITodo,
@@ -36,8 +36,8 @@ function Todo(props: ITodoProps) {
         />
     </Col>
     <Col md="2">
-      <Button variant="secondary" onClick={() => props.update(props.todo.id)}><FontAwesomeIcon icon={faPencilAlt} /></Button>
-      <Button variant="danger" onClick={() => props.delete(props.todo.id)}><FontAwesomeIcon icon={faTrashAlt} /></Button>
+      <Button size="sm" variant="secondary" onClick={() => props.update(props.todo.id)}><FontAwesomeIcon icon={faPencilAlt} /></Button>
+      <Button size="sm" variant="danger" onClick={() => props.delete(props.todo.id)}><FontAwesomeIcon icon={faTrashAlt} /></Button>
     </Col>
     </Row>
   )

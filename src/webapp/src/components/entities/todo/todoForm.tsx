@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useImperativeHandle, forwardRef, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { useAppDispatch } from "../config/store";
-import { createTodo, updateTodo } from "../reducers/todos";
-import { ITodo } from "../types/todo";
+import { useAppDispatch } from "../../../config/store";
+import { createTodo, updateTodo } from "../../../reducers/todos";
+import { ITodo } from "../../../types/todo";
 
 export interface ITodoFormProps {
     todo?: ITodo

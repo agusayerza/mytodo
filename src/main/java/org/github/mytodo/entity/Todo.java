@@ -1,10 +1,9 @@
 package org.github.mytodo.entity;
 
-import org.hibernate.annotations.CreationTimestamp;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 public class Todo {
@@ -16,6 +15,10 @@ public class Todo {
     private String description;
 
     private Boolean marked = false;
+
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
 
     public Todo() {
     }
@@ -49,6 +52,14 @@ public class Todo {
     public Todo marked(Boolean v) {
         this.marked = v;
         return this;
+    }
+
+    public Folder getFolder() {
+        return folder;
+    }
+
+    public void setFolder(Folder folder) {
+        this.folder = folder;
     }
 
     public void setMarked(Boolean marked) {
