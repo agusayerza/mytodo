@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Todos from './components/todos';
+import { Container, Navbar } from 'react-bootstrap';
+import Header from './components/header';
 
 function App() {
   return (
-    <div className="App">
-      <Todos/>
-    </div>
+    <Fragment>
+      <Header/>
+      <Container className="mainBody">
+        <Todos/>
+      </Container>
+    </Fragment>
   );
 }
 
