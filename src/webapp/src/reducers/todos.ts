@@ -29,7 +29,8 @@ export const getTodo = createAsyncThunk(
 export const createTodo = createAsyncThunk(
   'todo/create',
   async (entity: ITodo, thunkAPI) => {
-    const result = await axios.post<ITodo>(apiUrl, cleanEntity(entity));
+    console.log(entity)
+    const result = await axios.post<ITodo>(apiUrl, {description: entity.description});
     thunkAPI.dispatch(getTodos());
     return result;
   }
@@ -38,7 +39,8 @@ export const createTodo = createAsyncThunk(
 export const updateTodo = createAsyncThunk(
   'todo/update',
   async (entity: ITodo, thunkAPI) => {
-    const result = await axios.put<ITodo>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+    console.log(entity)
+    const result = await axios.put<ITodo>(`${apiUrl}/${entity.id}`, entity);
     thunkAPI.dispatch(getTodos());
     return result;
   }

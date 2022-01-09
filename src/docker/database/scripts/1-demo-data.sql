@@ -1,3 +1,3 @@
-INSERT INTO public.todo (id, description) VALUES (0, 'Create backend');
-INSERT INTO public.todo (id, description) VALUES (1, 'Create frontend');
-INSERT INTO public.todo (id, description) VALUES (2, 'Publish');
+INSERT INTO public.todo (id, description, marked) VALUES (0, 'Create backend', true);
+INSERT INTO public.todo (id, description, marked) VALUES (1, 'Create frontend', true);
+INSERT INTO public.todo (id, description, marked) VALUES (2, 'Publish', false);

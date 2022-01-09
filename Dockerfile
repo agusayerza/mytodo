@@ -4,7 +4,7 @@ WORKDIR /build
 COPY pom.xml .
 RUN mvn dependency:go-offline
 
-COPY src/ src/
+COPY src/main src/main
 RUN mvn package
 
 FROM openjdk:11

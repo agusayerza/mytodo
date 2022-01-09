@@ -13,8 +13,6 @@ services:
 
   database:
     build: ./src/docker/database
-    ports:
-      - "5432:5432"
 
   frontend:
     image: 'mytodo-frontend:latest'

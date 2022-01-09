@@ -1,11 +1,10 @@
 package org.github.mytodo.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 public class Todo {
@@ -15,6 +14,16 @@ public class Todo {
 
     @NonNull
     private String description;
+
+    private Boolean marked = false;
+
+    public Todo() {
+    }
+
+    public Todo(Long id, @NonNull String description) {
+        this.id = id;
+        this.description = description;
+    }
 
     public Long getId() {
         return id;
@@ -31,5 +40,18 @@ public class Todo {
 
     public void setDescription(@NonNull String description) {
         this.description = description;
+    }
+
+    public Boolean getMarked() {
+        return marked;
+    }
+
+    public Todo marked(Boolean v) {
+        this.marked = v;
+        return this;
+    }
+
+    public void setMarked(Boolean marked) {
+        this.marked = marked;
     }
 }
