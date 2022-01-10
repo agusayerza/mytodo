@@ -1,4 +1,4 @@
-create sequence hibernate_sequence start 3 increment 1;
+create sequence hibernate_sequence start 6 increment 1;
 
 create table folder (id int8 not null,
                     name varchar(128) not null,

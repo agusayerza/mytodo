@@ -12,6 +12,7 @@ services:
       - "8080:8080"
 
   database:
+    image: 'mytodo-database:latest'
     container_name: database
     build: ./src/docker/database
 

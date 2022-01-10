@@ -6,6 +6,7 @@ import { IFolder } from "../../../types/folder";
 
 export interface IFolderFormProps {
     folder?: IFolder
+    afterSubmit?: () => void
 }
 
 export const FolderForm = forwardRef((props: IFolderFormProps, ref: any) => {
@@ -33,8 +34,8 @@ export const FolderForm = forwardRef((props: IFolderFormProps, ref: any) => {
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
+        e.stopPropagation();
         if(!valid()) {
-            e.stopPropagation();
             return;
         }
         commitSubmit();
@@ -52,6 +53,7 @@ export const FolderForm = forwardRef((props: IFolderFormProps, ref: any) => {
                 name: name
             }))
         }
+        if(props.afterSubmit) props.afterSubmit();
         setName("");
     }
    return (<Form onSubmit={submit}>

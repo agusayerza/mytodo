@@ -21,15 +21,11 @@ export function UpdateTodoModal(props: IUpdateTodoModal) {
         <Modal.Title>Update To-Do</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <TodoForm todo={props.todo} ref={formRef}/>
+        <TodoForm todo={props.todo} ref={formRef} afterSubmit={props.hide}/>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.hide}>Close</Button>
-        <Button variant="primary" onClick= {() => {
-          if(formRef.current?.doSubmit()) {
-              props.hide();
-          }
-        }}>Update</Button>
+        <Button variant="primary" onClick= {() => formRef.current?.doSubmit()}>Update</Button>
       </Modal.Footer>
     </Modal>
     )   
@@ -51,15 +47,11 @@ export function UpdateFolderModal(props: IUpdateFolderModal) {
       <Modal.Title>Update To-Do</Modal.Title>
     </Modal.Header>
     <Modal.Body>
-      <FolderForm folder={props.folder} ref={formRef}/>
+      <FolderForm folder={props.folder} ref={formRef} afterSubmit={props.hide}/>
     </Modal.Body>
     <Modal.Footer>
       <Button variant="secondary" onClick={props.hide}>Close</Button>
-      <Button variant="primary" onClick= {() => {
-        if(formRef.current?.doSubmit()) {
-            props.hide();
-        }
-      }}>Update</Button>
+      <Button variant="primary" onClick= {() => formRef.current?.doSubmit()}>Update</Button>
     </Modal.Footer>
   </Modal>
   )   

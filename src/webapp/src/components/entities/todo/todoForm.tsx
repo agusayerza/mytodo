@@ -6,6 +6,7 @@ import { ITodo } from "../../../types/todo";
 
 export interface ITodoFormProps {
     todo?: ITodo
+    afterSubmit?: () => void
 }
 
 export const TodoForm = forwardRef((props: ITodoFormProps, ref: any) => {
@@ -33,8 +34,8 @@ export const TodoForm = forwardRef((props: ITodoFormProps, ref: any) => {
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
+        e.stopPropagation();
         if(!valid()) {
-            e.stopPropagation();
             return;
         }
         commitSubmit();
@@ -53,6 +54,7 @@ export const TodoForm = forwardRef((props: ITodoFormProps, ref: any) => {
                 marked: false
             }))
         }
+        if(props.afterSubmit) props.afterSubmit();
         setDescription("");
     }
    return (<Form onSubmit={submit}>
