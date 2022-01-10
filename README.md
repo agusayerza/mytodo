@@ -23,6 +23,7 @@ This command will build and run the Docker images for the database, backend and 
 
 The first run will take longer as the build step on the backend and frontend have to download all the dependencies.
 
+Frontend will be served at `localhost:3000` and backend API will be exposed at `localhost:8080`
 ## Structure
 This is a monorepo containing the whole project.
 
